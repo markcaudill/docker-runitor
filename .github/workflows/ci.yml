@@ -24,7 +24,7 @@ jobs:
         distro:
           - alpine
           - debian
-        runitor_versions: ${{ fromJSON(needs.setup-matrix.outputs.runitor_versions) }}
+        runitor_version: ${{ fromJSON(needs.setup-matrix.outputs.runitor_versions) }}
     steps:
       - name: Check Out Repo
         uses: actions/checkout@v3
