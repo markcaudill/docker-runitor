@@ -13,7 +13,9 @@ jobs:
       versions: ${{ steps.get_versions.outputs.versions }}
     steps:
       - id: get_versions
-        run: echo ::set-output 'name=runitor_versions::["v0.1.4","v0.1.5","v0.1.6","v0.1.7","v0.2.0","v0.3.0","v0.3.1","v0.4.0","v0.5.0","v0.6.0","v0.7.0-beta.1","v0.7.0-beta.2","v0.7.0-beta.3","v0.7.0-beta.4","v0.7.0","v0.7.1-beta.1","v0.7.1","v0.7.2+build-cgo_disabled","v0.7.2","v0.8.0","v0.9.0-beta.1","v0.9.0-beta.2","v0.9.0","v0.9.1","v0.9.2","v0.10.0-beta.1","v0.10.0-beta.2","v0.10.0-beta.3","v0.10.0-beta.4","v0.10.0-beta.5","v0.10.0-beta.6","v0.10.0","v0.10.1"]'
+        run: |
+          versions=$(curl -sL https://api.github.com/repos/bdd/runitor/git/matching-refs/tags/ | jq -c '.|map(select(.ref|test("v[0-9]+.[0-9]+.[0-9]+$")))|map(.ref|sub("refs\/tags\/";""))')
+          echo ::set-output name=versions::${versions}
 
   build:
     runs-on: ubuntu-latest
@@ -23,7 +25,7 @@ jobs:
         distro:
           - alpine
           - debian
-        runitor_version: ["v0.1.4","v0.1.5","v0.1.6","v0.1.7","v0.2.0","v0.3.0","v0.3.1","v0.4.0","v0.5.0","v0.6.0","v0.7.0-beta.1","v0.7.0-beta.2","v0.7.0-beta.3","v0.7.0-beta.4","v0.7.0","v0.7.1-beta.1","v0.7.1","v0.7.2+build-cgo_disabled","v0.7.2","v0.8.0","v0.9.0-beta.1","v0.9.0-beta.2","v0.9.0","v0.9.1","v0.9.2","v0.10.0-beta.1","v0.10.0-beta.2","v0.10.0-beta.3","v0.10.0-beta.4","v0.10.0-beta.5","v0.10.0-beta.6","v0.10.0","v0.10.1"]
+        runitor_version: ["v0.1.4","v0.1.5","v0.1.6","v0.1.7","v0.2.0","v0.3.0","v0.3.1","v0.4.0","v0.5.0","v0.6.0","v0.7.0","v0.7.1","v0.7.2","v0.8.0","v0.9.0","v0.9.1","v0.9.2","v0.10.0","v0.10.1"]
     steps:
       - name: Check Out Repo
         uses: actions/checkout@v3
