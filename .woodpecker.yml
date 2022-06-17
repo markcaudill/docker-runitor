@@ -31,4 +31,5 @@ pipeline:
       - DOCKER_REPOSITORY
     commands:
       - echo $${DOCKER_PASSWORD} | docker login --username $${DOCKER_USERNAME} --password-stdin $${DOCKER_REGISTRY}
-      - docker build --tag $${DOCKER_REGISTRY}/$${DOCKER_REPOSITORY} --build-arg DISTRO=$${DISTRO} --build-arg RUNITOR_VERSION=$${RUNITOR_VERSION} --file Dockerfile .
+      - docker build --tag $${DOCKER_REGISTRY}/$${DOCKER_REPOSITORY}:$${RUNITOR_VERSION}-$${DISTRO} --build-arg DISTRO=$${DISTRO} --build-arg RUNITOR_VERSION=$${RUNITOR_VERSION} --file Dockerfile .
+      - docker push $${DOCKER_REGISTRY}/$${DOCKER_REPOSITORY}:$${RUNITOR_VERSION}-$${DISTRO}
