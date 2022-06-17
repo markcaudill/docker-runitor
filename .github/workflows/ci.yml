@@ -24,8 +24,10 @@ jobs:
     strategy:
       matrix:
         distro:
-          - alpine
-          - debian
+          - name: alpine
+            version: 3
+          - name: debian
+            version: 11
         runitor_version: ${{ fromJSON(needs.get_runitor_versions.outputs.versions) }}
     steps:
       - name: Check Out Repo
@@ -39,10 +41,11 @@ jobs:
 
       - name: Build and push
         run: |
-          export tag=${{ secrets.DOCKER_REPOSITORY }}/runitor:${{ matrix.runitor_version }}-${{ matrix.distro }}
+          export tag=${{ secrets.DOCKER_REPOSITORY }}/runitor:${{ matrix.runitor_version }}-${{ matrix.distro.name }}_${{ matrix.distro.version }}
           docker build \
             --tag ${tag} \
-            --build-arg DISTRO=${{ matrix.distro }} \
+            --build-arg DISTRO_NAME=${{ matrix.distro.name }} \
+            --build-arg DISTRO_VERSION=${{ matrix.distro.version }} \
             --build-arg RUNITOR_VERSION=${{ matrix.runitor_version }} \
             --file Dockerfile .
           docker push ${tag}
