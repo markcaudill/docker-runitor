@@ -1,6 +1,9 @@
 # runitor-docker
 
 [![CI to Docker Hub](https://github.com/markcaudill/runitor-docker/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/markcaudill/runitor-docker/actions/workflows/ci.yml)
+[![Docker Pulls](https://img.shields.io/docker/pulls/markcaudill/runitor)](https://hub.docker.com/repository/docker/markcaudill/runitor)
+[![Docker Image Size (tag)](https://img.shields.io/docker/image-size/markcaudill/runitor/latest-alpine_latest?label=latest-alpine_latest)](https://hub.docker.com/repository/registry-1.docker.io/markcaudill/runitor/tags?page=1&ordering=last_updated&name=latest-alpine_latest)
+[![Docker Image Size (tag)](https://img.shields.io/docker/image-size/markcaudill/runitor/latest-debian_latest?label=latest-debian_latest)](https://hub.docker.com/repository/registry-1.docker.io/markcaudill/runitor/tags?page=1&ordering=last_updated&name=latest-debian_latest)
 
 Unofficial Docker images for <https://github.com/bdd/runitor> based on Debian and Alpine images.
 
