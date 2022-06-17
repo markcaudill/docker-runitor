@@ -1,7 +1,9 @@
+ARG BUILDER
 ARG DISTRO_NAME
 ARG DISTRO_VERSION
 
-FROM golang:1 AS builder
+# hadolint ignore=DL3006
+FROM ${BUILDER} AS builder
 ARG RUNITOR_VERSION
 RUN go install bdd.fi/x/runitor/cmd/runitor@${RUNITOR_VERSION:-latest}
 
