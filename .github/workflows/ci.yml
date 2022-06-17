@@ -1,0 +1,46 @@
+---
+name: CI to Docker Hub
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 0 * * *'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        distro:
+          - alpine
+          - debian
+        runnitor_version:
+          - latest
+          - v0.10.1
+          - v0.9.2
+          - v0.9.1
+          - v0.9.0
+          - v0.8.0
+          - v0.7.2
+          - v0.7.1
+          - v0.7.1
+          - v0.6.0
+          - v0.5.0
+          - v0.4.0
+    steps:
+      - name: Check Out Repo
+        uses: actions/checkout@v2
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Build and push
+        run: |
+          docker build \
+            --tag ${{ secrets.DOCKER_REPOSITORY }}:${{ matrix.runitor_version }}-${{ matrix.distro }} \
+            --build-arg DISTRO=${{ matrix.distro }} \
+            --build-arg RUNITOR_VERSION=${{ matrix.runitor_version }} \
+            --file Dockerfile .
+          docker push ${{ secrets.DOCKER_REPOSITORY }}:${{ matrix.runitor_version }}-${{ matrix.distro }}
