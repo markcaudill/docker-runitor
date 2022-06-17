@@ -14,7 +14,7 @@ jobs:
     steps:
       - id: get_versions
         run: |
-          versions=$(curl -sL https://api.github.com/repos/bdd/runitor/git/matching-refs/tags/ | jq -c '.|map(select(.ref|test("v[0-9]+.[0-9]+.[0-9]+$")))|map(.ref|sub("refs\/tags\/";""))')
+          versions=$(curl -sL https://api.github.com/repos/bdd/runitor/git/matching-refs/tags/ | jq -c '.|map(select(.ref|test("v[0-9]+.[0-9]+.[0-9]+$")))|map(.ref|sub("refs\/tags\/";""))' | jq -c '. + ["latest"]')
           echo ${versions}
           echo ::set-output name=versions::${versions}
 
@@ -26,8 +26,14 @@ jobs:
         distro:
           - name: alpine
             version: 3
+          - name: alpine
+            version: latest
           - name: debian
             version: 11
+          - name: debian
+            version: latest
+          - name: debian
+            version: stable
         runitor_version: ${{ fromJSON(needs.get_runitor_versions.outputs.versions) }}
     steps:
       - name: Check Out Repo
