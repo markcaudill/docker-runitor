@@ -47,7 +47,7 @@ jobs:
 
       - name: Build and push
         run: |
-          export tag=${{ secrets.DOCKER_REPOSITORY }}/runitor:${{ matrix.runitor_version }}-${{ matrix.distro.name }}
+          export tag=${{ secrets.DOCKER_REPOSITORY }}/runitor:${{ matrix.runitor_version }}-$(echo ${{ matrix.distro.name }} | sed 's/:/_/g')
           docker build \
             --tag ${tag} \
             --build-arg BUILDER=${{ matrix.distro.builder }} \
