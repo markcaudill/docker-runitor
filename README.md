@@ -7,19 +7,19 @@
 
 Unofficial Docker images for <https://github.com/bdd/runitor> based on Debian and Alpine images.
 
-Images are tagged like: `markcaudill/runitor:${RUNITOR_VERSION}-${DISTRO_NAME}_${DISTRO_VERSION}`
+Images are tagged like: `markcaudill/runitor:${RUNITOR_VERSION}-${DISTRO_NAME}`
 
 Example using the latest runitor and Debian base image versions:
 
 ```shell
-$ docker run --rm -it markcaudill/runitor:latest-debian_latest runitor -version
+$ docker run --rm -it markcaudill/runitor:latest-debian runitor -version
 runitor v0.10.1
 ```
 
 Or using the runitor v0.10.0 and the latest Alpine base image:
 
 ```shell
-$ docker run --rm -it markcaudill/runitor:v0.9.0-alpine_latest runitor -version
+$ docker run --rm -it markcaudill/runitor:v0.9.0-alpine runitor -version
 runitor v0.9.0
 ```
 

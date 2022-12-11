@@ -25,15 +25,9 @@ jobs:
       matrix:
         distro:
           - name: alpine:latest
-            builder: golang:1-alpine
-          - name: alpine:3.16
-            builder: golang:1-alpine3.16
+            builder: golang:alpine
           - name: debian:latest
-            builder: golang:1-bullseye
-          - name: debian:11
-            builder: golang:1-bullseye
-          - name: debian:10
-            builder: golang:1-buster
+            builder: golang:bullseye
         runitor_version: ${{ fromJSON(needs.get_runitor_versions.outputs.versions) }}
     steps:
       - name: Check Out Repo
@@ -47,7 +41,7 @@ jobs:
 
       - name: Build and push
         run: |
-          tag="${{ secrets.DOCKER_REPOSITORY }}/runitor:${{ matrix.runitor_version }}-$(echo ${{ matrix.distro.name }} | sed 's/:/_/g')"
+          tag="${{ secrets.DOCKER_REPOSITORY }}/runitor:${{ matrix.runitor_version }}-$(echo ${{ matrix.distro.name }} | awk -F':' '{print $1}')"
           export tag
           echo "${tag}"
           docker build \
